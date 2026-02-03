@@ -1,4 +1,4 @@
-package com.setoh.visual.ecs;
+package com.setoh.pixphy.ecs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public final class World {
     }
 
     public List<EntityComponents> getEntitiesWithComponents(Set<Class<? extends Component>> componentTypes) {
-        if (componentTypes.size() == 0) {
+        if (componentTypes.isEmpty()) {
             return List.of();
         }
         

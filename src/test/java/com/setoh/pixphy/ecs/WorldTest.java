@@ -1,4 +1,4 @@
-package com.setoh.visual.ecs;
+package com.setoh.pixphy.ecs;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

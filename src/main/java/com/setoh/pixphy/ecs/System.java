@@ -1,4 +1,4 @@
-package com.setoh.visual.ecs;
+package com.setoh.pixphy.ecs;
 
 @FunctionalInterface
 public interface System {

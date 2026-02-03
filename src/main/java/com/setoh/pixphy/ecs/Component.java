@@ -1,4 +1,4 @@
-package com.setoh.visual.ecs;
+package com.setoh.pixphy.ecs;
 
 public interface Component {
 }
