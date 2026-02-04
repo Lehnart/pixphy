@@ -95,7 +95,7 @@ final class WorldTest {
         world.addComponent(a, new Velocity(1.0, 0.0));
         world.addComponent(b, new Position(5.0, 5.0));
 
-        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(Set.of(Position.class, Velocity.class));
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(Position.class, Velocity.class));
         assertEquals(1, results.size());
         EntityComponents result = results.get(0);
         assertEquals(a, result.entity());
@@ -113,7 +113,7 @@ final class WorldTest {
         world.addComponent(entity, new Velocity(2.0, -1.0));
 
         System movementSystem = (ecsWorld, dt) -> {
-            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(Set.of(Position.class, Velocity.class))) {
+            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(Position.class, Velocity.class))) {
                 Position position = (Position) result.components().get(0);
                 Velocity velocity = (Velocity) result.components().get(1);
                 position.x += velocity.dx * dt;
