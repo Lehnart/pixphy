@@ -49,7 +49,7 @@ public final class World {
         return components != null && components.stream().anyMatch(c -> componentType.isInstance(c));
     }
 
-    public List<EntityComponents> getEntitiesWithComponents(Set<Class<? extends Component>> componentTypes) {
+    public List<EntityComponents> getEntitiesWithComponents(List<Class<? extends Component>> componentTypes) {
         if (componentTypes.isEmpty()) {
             return List.of();
         }
