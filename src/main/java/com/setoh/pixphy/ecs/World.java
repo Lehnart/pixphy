@@ -28,7 +28,7 @@ public final class World {
         if (components == null) {
             return;
         }
-        components.removeIf(c -> componentType.isInstance(c));
+        components.removeIf(componentType::isInstance);
     }
 
     public <T extends Component> T getComponent(Entity entity, Class<T> componentType) {
@@ -36,7 +36,7 @@ public final class World {
         if (components == null) {
             return null;
         }
-        Optional<Component> component = components.stream().filter(c->componentType.isInstance(c)).findFirst();
+        Optional<Component> component = components.stream().filter(componentType::isInstance).findFirst();
         if (component.isEmpty()) {
             return null;
         }
@@ -45,7 +45,7 @@ public final class World {
 
     public boolean hasComponent(Entity entity, Class<? extends Component> componentType) {
         List<Component> components = entityToComponents.get(entity);
-        return components != null && components.stream().anyMatch(c -> componentType.isInstance(c));
+        return components != null && components.stream().anyMatch(componentType::isInstance);
     }
 
     public List<EntityComponents> getEntitiesWithComponents(List<Class<? extends Component>> componentTypes) {
