@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.Test;
 
 final class PositionTest {
-    
+
     @Test
     void testConstructorAndFields() {
         Position position = new Position(1.5, -2.25);
-        assertEquals(1.5, position.x);
-        assertEquals(-2.25, position.y);
+        assertEquals(1.5, position.getX());
+        assertEquals(-2.25, position.getY());
     }
 
     @Test
@@ -44,7 +44,7 @@ final class PositionTest {
     @Test
     void testEqualsOtherType() {
         Position position = new Position(1.0, 2.0);
-        assertNotEquals(position, "Position(1,2)");
+        assertNotEquals("Position(1,2)", position);
         assertNotEquals(position, null);
     }
 }

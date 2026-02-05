@@ -11,8 +11,8 @@ final class VelocityTest {
     @Test
     void testConstructorAndFields() {
         Velocity velocity = new Velocity(0.5, -1.75);
-        assertEquals(0.5, velocity.dx);
-        assertEquals(-1.75, velocity.dy);
+        assertEquals(0.5, velocity.getDx());
+        assertEquals(-1.75, velocity.getDy());
     }
 
     @Test
@@ -43,7 +43,7 @@ final class VelocityTest {
     @Test
     void testEqualsOtherType() {
         Velocity velocity = new Velocity(1.0, 2.0);
-        assertNotEquals(velocity, "Velocity(1,2)");
+        assertNotEquals("Velocity(1,2)", velocity);
         assertNotEquals(velocity, null);
     }
 }

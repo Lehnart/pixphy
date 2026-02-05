@@ -21,8 +21,8 @@ class SystemRunnerTest{
             for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(Position.class, Velocity.class))) {
                 Position position = (Position) result.components().get(0);
                 Velocity velocity = (Velocity) result.components().get(1);
-                position.x += velocity.dx * dt;
-                position.y += velocity.dy * dt;
+                position.setX(position.getX() + velocity.getDx() * dt);
+                position.setY(position.getY() + velocity.getDy() * dt);
             }
         };
 
