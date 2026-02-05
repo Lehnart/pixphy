@@ -9,73 +9,46 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.setoh.pixphy.physics.components.Position;
+import com.setoh.pixphy.physics.components.Velocity;
+
 final class WorldTest {
-    static final class Position implements Component {
-        double x;
-        double y;
-
-        Position(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) {
-                return true;
-            }
-            if (!(other instanceof Position position)) {
-                return false;
-            }
-            return Double.compare(position.x, x) == 0
-                && Double.compare(position.y, y) == 0;
-        }
-
-        @Override
-        public int hashCode() {
-            long bits = Double.doubleToLongBits(x);
-            long bits2 = Double.doubleToLongBits(y);
-            return (int) (bits ^ (bits >>> 32) ^ bits2 ^ (bits2 >>> 32));
-        }
-    }
-
-    static final class Velocity implements Component {
-        double dx;
-        double dy;
-
-        Velocity(double dx, double dy) {
-            this.dx = dx;
-            this.dy = dy;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            if (this == other) {
-                return true;
-            }
-            if (!(other instanceof Velocity velocity)) {
-                return false;
-            }
-            return Double.compare(velocity.dx, dx) == 0
-                && Double.compare(velocity.dy, dy) == 0;
-        }
-
-        @Override
-        public int hashCode() {
-            long bits = Double.doubleToLongBits(dx);
-            long bits2 = Double.doubleToLongBits(dy);
-            return (int) (bits ^ (bits >>> 32) ^ bits2 ^ (bits2 >>> 32));
-        }
-    }
-
     @Test
-    void addGetRemoveComponent() {
+    void testGetComponent() {
         World world = new World();
         Entity entity = world.createEntity();
 
         Position position = new Position(1.0, 2.0);
         world.addComponent(entity, position);
 
+        assertEquals(position, world.getComponent(entity, Position.class));
+        assertTrue(world.hasComponent(entity, Position.class));
+    }
+
+    @Test
+    void testGetNonExistingComponent() {
+        World world = new World();
+        Entity entity = world.createEntity();
+
+        Position position = new Position(1.0, 2.0);
+        world.addComponent(entity, position);
+
+        assertNull(world.getComponent(entity, Velocity.class));
+    }
+
+    @Test
+    void testGetComponentFromNonExistingEntity() {
+        World world = new World();
+        assertNull(world.getComponent(new Entity(5), Velocity.class));
+    }
+
+    @Test
+    void testRemoveComponent() {
+        World world = new World();
+        Entity entity = world.createEntity();
+
+        Position position = new Position(1.0, 2.0);
+        world.addComponent(entity, position);
         assertEquals(position, world.getComponent(entity, Position.class));
         assertTrue(world.hasComponent(entity, Position.class));
 
@@ -85,7 +58,34 @@ final class WorldTest {
     }
 
     @Test
-    void queryComponents() {
+    void testRemoveNonExistingComponent() {
+        World world = new World();
+        Entity entity = world.createEntity();
+
+        Position position = new Position(1.0, 2.0);
+        world.addComponent(entity, position);
+
+        world.removeComponent(entity, Velocity.class);
+        assertNull(world.getComponent(entity, Velocity.class));
+        assertFalse(world.hasComponent(entity, Velocity.class));
+        
+        assertEquals(position, world.getComponent(entity, Position.class));
+        assertTrue(world.hasComponent(entity, Position.class));
+    }
+
+        @Test
+    void testRemoveNonExistingEntity() {
+        World world = new World();
+        Entity entity = world.createEntity();
+        Position position = new Position(1.0, 2.0);
+        world.addComponent(entity, position);
+        world.removeComponent(new Entity(5), Position.class);
+        assertEquals(position, world.getComponent(entity, Position.class));
+        assertTrue(world.hasComponent(entity, Position.class));
+    }
+
+    @Test
+    void testGetEntitiesWithComponents() {
         World world = new World();
         Entity a = world.createEntity();
         Entity b = world.createEntity();
@@ -105,24 +105,22 @@ final class WorldTest {
     }
 
     @Test
-    void systemRunner() {
+    void testGetEntitiesWithNoComponents() {
         World world = new World();
-        Entity entity = world.createEntity();
-        world.addComponent(entity, new Position(0.0, 0.0));
-        world.addComponent(entity, new Velocity(2.0, -1.0));
+        Entity a = world.createEntity();
+        world.addComponent(a, new Position(0.0, 0.0));
 
-        System movementSystem = (ecsWorld, dt) -> {
-            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(Position.class, Velocity.class))) {
-                Position position = (Position) result.components().get(0);
-                Velocity velocity = (Velocity) result.components().get(1);
-                position.x += velocity.dx * dt;
-                position.y += velocity.dy * dt;
-            }
-        };
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(Position.class, Velocity.class));
+        assertEquals(0, results.size());
+    }
 
-        SystemRunner.runSystems(world, List.of(movementSystem), 0.5);
+        @Test
+    void testGetEntitiesWithComponentsWithEmptyList() {
+        World world = new World();
+        Entity a = world.createEntity();
+        world.addComponent(a, new Position(0.0, 0.0));
 
-        Position updated = world.getComponent(entity, Position.class);
-        assertEquals(new Position(1.0, -0.5), updated);
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of());
+        assertEquals(0, results.size());
     }
 }
