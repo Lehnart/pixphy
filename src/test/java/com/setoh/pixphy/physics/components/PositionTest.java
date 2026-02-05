@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
+import com.setoh.pixphy.physics.component.Position;
+
 final class PositionTest {
 
     @Test

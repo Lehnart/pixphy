@@ -1,4 +1,4 @@
-package com.setoh.pixphy.physics.components;
+package com.setoh.pixphy.physics.component;
 
 import com.setoh.pixphy.ecs.Component;
 

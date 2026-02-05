@@ -8,8 +8,30 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class World {
+
     private int nextEntityId = 1;
     private final Map<Entity, List<Component>> entityToComponents = new HashMap<>();
+    private final List<ECSSystem> systems = new ArrayList<>();
+
+    private boolean isAlive = true;
+
+    public boolean isAlive(){
+        return isAlive;
+    }
+
+    public void kill(){
+        isAlive = false;
+    }
+    
+    public void addSystem(ECSSystem system){
+        systems.add(system);
+    }
+
+    public void runSystems(double dt) {
+        for (ECSSystem system : systems) {
+            system.update(this, dt);
+        }
+    }
 
     public Entity createEntity() {
         int entityId = nextEntityId;
