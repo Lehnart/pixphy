@@ -38,6 +38,7 @@ final class VelocityTest {
         Velocity c = new Velocity(6.0, 4.0);
         assertNotEquals(a, b);
         assertNotEquals(a, c);
+        assertNotEquals(b, c);
     }
 
     @Test

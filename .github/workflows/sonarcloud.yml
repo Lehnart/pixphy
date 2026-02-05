@@ -1,5 +1,4 @@
-name: Build and SonarCloud
-
+name: Build
 on:
   push:
     branches: [ "main" ]
@@ -30,6 +29,8 @@ jobs:
       - name: SonarCloud Quality Gate
         uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
         timeout-minutes: 10
+        with:
+          scanMetadataReportFile: target/sonar/report-task.txt
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
