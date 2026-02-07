@@ -78,6 +78,19 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>os-maven-plugin</artifactId>
+        <version>1.7.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>detect</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.11</version>
@@ -117,4 +130,18 @@
 
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>lwjgl-natives</id>
+      <activation>
+        <property>
+          <name>os.detected.classifier</name>
+        </property>
+      </activation>
+      <properties>
+        <lwjgl.natives>natives-${os.detected.classifier}</lwjgl.natives>
+      </properties>
+    </profile>
+  </profiles>
 </project>
