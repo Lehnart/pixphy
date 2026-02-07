@@ -17,7 +17,7 @@
 
     <gdx.version>1.14.0</gdx.version>
     <lwjgl.version>3.3.6</lwjgl.version>
-    <lwjgl.natives>natives-windows</lwjgl.natives>
+    <lwjgl.natives>natives-linux</lwjgl.natives>
 
     <sonar.projectKey>Lehnart_pixphy</sonar.projectKey>
     <sonar.organization>lehnart</sonar.organization>
@@ -120,4 +120,40 @@
 
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>lwjgl-natives-linux</id>
+      <activation>
+        <os>
+          <family>unix</family>
+        </os>
+      </activation>
+      <properties>
+        <lwjgl.natives>natives-linux</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-windows</id>
+      <activation>
+        <os>
+          <family>windows</family>
+        </os>
+      </activation>
+      <properties>
+        <lwjgl.natives>natives-windows</lwjgl.natives>
+      </properties>
+    </profile>
+    <profile>
+      <id>lwjgl-natives-macos</id>
+      <activation>
+        <os>
+          <family>mac</family>
+        </os>
+      </activation>
+      <properties>
+        <lwjgl.natives>natives-macos</lwjgl.natives>
+      </properties>
+    </profile>
+  </profiles>
 </project>
