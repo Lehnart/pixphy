@@ -146,4 +146,17 @@ final class WorldTest {
         Position updated = world.getComponent(entity, Position.class);
         assertEquals(new Position(1.0, -0.5), updated);
     }
+
+    @Test
+    void testIsAliveDefaultsToTrue() {
+        World world = new World();
+        assertTrue(world.isAlive());
+    }
+
+    @Test
+    void testKillSetsAliveToFalse() {
+        World world = new World();
+        world.kill();
+        assertFalse(world.isAlive());
+    }
 }
