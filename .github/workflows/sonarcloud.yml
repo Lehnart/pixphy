@@ -24,15 +24,7 @@ jobs:
       - name: Install GLFW runtime deps
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            xvfb \
-            libgl1-mesa-dri \
-            libgl1-mesa-glx \
-            libx11-6 \
-            libxrandr2 \
-            libxinerama1 \
-            libxcursor1 \
-            libxi6
+          sudo apt-get install -y xvfb
 
       - name: Build, test, and analyze (with LWJGL)
         env:
