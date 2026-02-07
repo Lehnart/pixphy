@@ -9,8 +9,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.setoh.pixphy.physics.components.Position;
-import com.setoh.pixphy.physics.components.Velocity;
+import com.setoh.pixphy.physics.component.Position;
+import com.setoh.pixphy.physics.component.Velocity;
 
 final class WorldTest {
     @Test
@@ -114,7 +114,7 @@ final class WorldTest {
         assertEquals(0, results.size());
     }
 
-        @Test
+    @Test
     void testGetEntitiesWithComponentsWithEmptyList() {
         World world = new World();
         Entity a = world.createEntity();
@@ -122,5 +122,41 @@ final class WorldTest {
 
         List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of());
         assertEquals(0, results.size());
+    }
+
+    @Test
+    void testRunSystems(){
+        World world = new World();
+        Entity entity = world.createEntity();
+        world.addComponent(entity, new Position(0.0, 0.0));
+        world.addComponent(entity, new Velocity(2.0, -1.0));
+
+        ECSSystem movementSystem = (ecsWorld, dt) -> {
+            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(Position.class, Velocity.class))) {
+                Position position = (Position) result.components().get(0);
+                Velocity velocity = (Velocity) result.components().get(1);
+                position.setX(position.getX() + velocity.getDx() * dt);
+                position.setY(position.getY() + velocity.getDy() * dt);
+            }
+        };
+
+        world.addSystem(movementSystem);
+        world.runSystems(0.5);
+
+        Position updated = world.getComponent(entity, Position.class);
+        assertEquals(new Position(1.0, -0.5), updated);
+    }
+
+    @Test
+    void testIsAliveDefaultsToTrue() {
+        World world = new World();
+        assertTrue(world.isAlive());
+    }
+
+    @Test
+    void testKillSetsAliveToFalse() {
+        World world = new World();
+        world.kill();
+        assertFalse(world.isAlive());
     }
 }
