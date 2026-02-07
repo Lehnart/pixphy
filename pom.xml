@@ -17,7 +17,7 @@
 
     <gdx.version>1.14.0</gdx.version>
     <lwjgl.version>3.3.6</lwjgl.version>
-    <lwjgl.natives>natives-windows</lwjgl.natives>
+    <lwjgl.natives>natives-${os.detected.classifier}</lwjgl.natives>
 
     <sonar.projectKey>Lehnart_pixphy</sonar.projectKey>
     <sonar.organization>lehnart</sonar.organization>
@@ -76,20 +76,14 @@
   </dependencies>
 
   <build>
-    <plugins>
-      <plugin>
+    <extensions>
+      <extension>
         <groupId>kr.motd.maven</groupId>
         <artifactId>os-maven-plugin</artifactId>
         <version>1.7.1</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>detect</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-
+      </extension>
+    </extensions>
+    <plugins>
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -130,18 +124,4 @@
 
     </plugins>
   </build>
-
-  <profiles>
-    <profile>
-      <id>lwjgl-natives</id>
-      <activation>
-        <property>
-          <name>os.detected.classifier</name>
-        </property>
-      </activation>
-      <properties>
-        <lwjgl.natives>natives-${os.detected.classifier}</lwjgl.natives>
-      </properties>
-    </profile>
-  </profiles>
 </project>
