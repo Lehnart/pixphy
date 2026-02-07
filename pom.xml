@@ -17,7 +17,7 @@
 
     <gdx.version>1.14.0</gdx.version>
     <lwjgl.version>3.3.6</lwjgl.version>
-    <lwjgl.natives>natives-${os.detected.classifier}</lwjgl.natives>
+    <lwjgl.natives>natives-windows</lwjgl.natives>
 
     <sonar.projectKey>Lehnart_pixphy</sonar.projectKey>
     <sonar.organization>lehnart</sonar.organization>
@@ -54,16 +54,19 @@
     <dependency>
       <groupId>org.lwjgl</groupId>
       <artifactId>lwjgl</artifactId>
+      <version>${lwjgl.version}</version>
       <classifier>${lwjgl.natives}</classifier>
     </dependency>
     <dependency>
       <groupId>org.lwjgl</groupId>
       <artifactId>lwjgl-glfw</artifactId>
+      <version>${lwjgl.version}</version>
       <classifier>${lwjgl.natives}</classifier>
     </dependency>
     <dependency>
       <groupId>org.lwjgl</groupId>
       <artifactId>lwjgl-opengl</artifactId>
+      <version>${lwjgl.version}</version>
       <classifier>${lwjgl.natives}</classifier>
     </dependency>
 
@@ -76,13 +79,6 @@
   </dependencies>
 
   <build>
-    <extensions>
-      <extension>
-        <groupId>kr.motd.maven</groupId>
-        <artifactId>os-maven-plugin</artifactId>
-        <version>1.7.1</version>
-      </extension>
-    </extensions>
     <plugins>
       <plugin>
         <groupId>org.jacoco</groupId>
