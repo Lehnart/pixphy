@@ -24,7 +24,6 @@ jobs:
       - name: Build, test, and analyze (with LWJGL)
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          MAVEN_OPTS: -Dpixphy.tests.lwjgl=true
         run: mvn -B -DskipTests=false verify sonar:sonar
 
       - name: SonarCloud Quality Gate

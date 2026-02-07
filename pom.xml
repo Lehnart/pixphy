@@ -114,7 +114,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
-          <argLine>${jacoco.argLine} -Dpixphy.tests.lwjgl=true</argLine>
+          <argLine>${jacoco.argLine}</argLine>
         </configuration>
       </plugin>
 

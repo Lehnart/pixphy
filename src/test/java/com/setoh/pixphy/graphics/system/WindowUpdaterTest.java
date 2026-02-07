@@ -4,20 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.resource.Window;
 
 final class WindowUpdaterTest {
-    private static void assumeLwjglTestsEnabled() {
-        Assumptions.assumeTrue(
-            Boolean.getBoolean("pixphy.tests.lwjgl"),
-            "Set -Dpixphy.tests.lwjgl=true to run LWJGL window tests"
-        );
-    }
-
     @Test
     void testUpdateKeepsWorldAliveWhenWindowNotClosing() {
         World world = new World();
