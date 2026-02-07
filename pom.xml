@@ -144,16 +144,5 @@
         <lwjgl.natives>natives-windows</lwjgl.natives>
       </properties>
     </profile>
-    <profile>
-      <id>lwjgl-natives-macos</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <properties>
-        <lwjgl.natives>natives-macos</lwjgl.natives>
-      </properties>
-    </profile>
   </profiles>
 </project>
