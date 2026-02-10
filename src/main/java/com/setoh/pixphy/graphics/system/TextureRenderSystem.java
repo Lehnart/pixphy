@@ -3,6 +3,7 @@ package com.setoh.pixphy.graphics.system;
 import com.setoh.pixphy.ecs.ECSSystem;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.resource.Texture;
+import com.setoh.pixphy.graphics.resource.TexturedQuadRenderer;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -31,7 +32,7 @@ public final class TextureRenderSystem implements ECSSystem {
 
         glClearColor(0.05f, 0.05f, 0.08f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        renderer.draw(texture, spriteX, spriteY, texture.width()*2, texture.height()*2);
+        renderer.draw(texture, spriteX, spriteY, texture.width()*2.f, texture.height()*2.f);
     }
 
     public void destroy() {
