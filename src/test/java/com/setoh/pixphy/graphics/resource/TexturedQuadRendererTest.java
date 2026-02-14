@@ -16,7 +16,7 @@ final class TexturedQuadRendererTest {
     void testDrawBindsTextureAndRestoresVertexArrayBinding() {
         Window window = new Window(100, 100, "PixPhy TexturedQuadRenderer Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             TexturedQuadRenderer renderer = new TexturedQuadRenderer(100, 100);
             try {
                 renderer.draw(texture, 0.0f, 0.0f, 16.0f, 16.0f);
@@ -48,7 +48,7 @@ final class TexturedQuadRendererTest {
     void testConstructDrawAndDestroyDoesNotThrow() {
         Window window = new Window(100, 100, "PixPhy TexturedQuadRenderer Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             TexturedQuadRenderer renderer = new TexturedQuadRenderer(100, 100);
             try {
                 assertDoesNotThrow(() -> renderer.draw(texture, 8.0f, 4.0f, 32.0f, 24.0f));

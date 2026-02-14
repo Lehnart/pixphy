@@ -7,7 +7,6 @@ import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.component.Sprite;
 import com.setoh.pixphy.graphics.resource.Texture;
 import com.setoh.pixphy.graphics.resource.Window;
-import com.setoh.pixphy.graphics.system.AsteroidRenderSystem;
 import com.setoh.pixphy.graphics.system.TextureRenderSystem;
 import com.setoh.pixphy.graphics.system.WindowUpdater;
 import com.setoh.pixphy.physics.component.Position;
@@ -33,7 +32,7 @@ public final class Game {
 
         Entity asteroid = world.createEntity();
         world.addComponent(asteroid, new Position(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
-        world.addComponent(asteroid, new Sprite(120,270,"textures/asteroid.png"));
+        world.addComponent(asteroid, new Sprite(120,245,"textures/asteroid.png"));
 
 
         TextureRenderSystem renderSystem = new TextureRenderSystem(textures, WINDOW_WIDTH, WINDOW_HEIGHT, "textures/space_background.png");

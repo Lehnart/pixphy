@@ -17,7 +17,7 @@ final class TextureTest {
     void testLoadTextureAndExposeMetadata() {
         Window window = new Window(100, 100, "PixPhy Texture Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             try {
                 assertTrue(texture.id() > 0);
                 assertTrue(texture.width() > 0);
@@ -34,7 +34,7 @@ final class TextureTest {
     void testBindBindsTextureToCurrentUnit() {
         Window window = new Window(100, 100, "PixPhy Texture Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             try {
                 texture.bind();
                 assertEquals(texture.id(), glGetInteger(GL_TEXTURE_BINDING_2D));
@@ -50,7 +50,7 @@ final class TextureTest {
     void testBindWithTextureUnitActivatesRequestedUnitAndBindsTexture() {
         Window window = new Window(100, 100, "PixPhy Texture Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             try {
                 texture.bind(3);
                 assertEquals(GL_TEXTURE0 + 3, glGetInteger(GL_ACTIVE_TEXTURE));
@@ -67,7 +67,7 @@ final class TextureTest {
     void testDestroyDoesNotThrow() {
         Window window = new Window(100, 100, "PixPhy Texture Test");
         try {
-            Texture texture = new Texture("textures/space_backgrond.png");
+            Texture texture = new Texture("textures/space_background.png");
             assertDoesNotThrow(texture::destroy);
         } finally {
             window.destroy();
