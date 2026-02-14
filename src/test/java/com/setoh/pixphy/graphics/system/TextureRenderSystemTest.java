@@ -1,66 +1,236 @@
 package com.setoh.pixphy.graphics.system;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.setoh.pixphy.ecs.Entity;
 import com.setoh.pixphy.ecs.World;
+import com.setoh.pixphy.graphics.component.Sprite;
+import com.setoh.pixphy.graphics.resource.Texture;
 import com.setoh.pixphy.graphics.resource.Window;
+
+import java.util.HashMap;
+import java.util.Map;
 
 final class TextureRenderSystemTest {
 
     @Test
-    void testConstructorThrowsWhenTextureResourceDoesNotExist() {
-        Window window = new Window(100, 100, "PixPhy TextureRenderSystem Test");
+    void testConstructorWithValidParameters() {
+        Window window = new Window(100, 100, "Test");
         try {
-            IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> new TextureRenderSystem("textures/does-not-exist.png", 100, 100)
-            );
-
-            assertTrue(exception.getMessage().startsWith("Resource not found in classpath:"));
+            Texture mockTexture = new Texture("textures/space_background.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("bg", mockTexture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
+                assertDoesNotThrow(() -> system);
+            } finally {
+                mockTexture.destroy();
+            }
         } finally {
             window.destroy();
         }
     }
 
     @Test
-    void testUpdateDoesNotThrowWhenSystemIsActive() {
-        Window window = new Window(100, 100, "PixPhy TextureRenderSystem Test");
-        TextureRenderSystem system = null;
+    void testConstructorWithDifferentViewportSizes() {
+        Window window = new Window(100, 100, "Test");
         try {
-            World world = new World();
-            system = new TextureRenderSystem("textures/space_backgrond.png", 100, 100);
-
-            TextureRenderSystem renderSystem = system;
-            assertDoesNotThrow(() -> renderSystem.update(world, 0.016));
-        } finally {
-            if (system != null) {
-                system.destroy();
+            Texture texture = new Texture("textures/space_background.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("bg", texture);
+                
+                new TextureRenderSystem(textureMap, 800, 600, "bg");
+                new TextureRenderSystem(textureMap, 1920, 1080, "bg");
+                new TextureRenderSystem(textureMap, 320, 240, "bg");
+                
+                assertDoesNotThrow(() -> {
+                    new TextureRenderSystem(textureMap, 640, 480, "bg");
+                });
+            } finally {
+                texture.destroy();
             }
+        } finally {
             window.destroy();
         }
     }
 
     @Test
-    void testDestroyIsIdempotentAndUpdateAfterDestroyDoesNotThrow() {
-        Window window = new Window(100, 100, "PixPhy TextureRenderSystem Test");
-        TextureRenderSystem system = null;
+    void testUpdateWithEmptyWorld() {
+        Window window = new Window(100, 100, "Test");
         try {
-            World world = new World();
-            system = new TextureRenderSystem("textures/space_backgrond.png", 100, 100);
-
-            TextureRenderSystem renderSystem = system;
-            assertDoesNotThrow(renderSystem::destroy);
-            assertDoesNotThrow(renderSystem::destroy);
-            assertDoesNotThrow(() -> renderSystem.update(world, 0.016));
-        } finally {
-            if (system != null) {
-                system.destroy();
+            Texture texture = new Texture("textures/space_background.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("bg", texture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
+                World world = new World();
+                
+                assertDoesNotThrow(() -> system.update(world, 0.016));
+            } finally {
+                texture.destroy();
             }
+        } finally {
             window.destroy();
         }
     }
+
+    @Test
+    void testUpdateWithSingleEntity() {
+        Window window = new Window(100, 100, "Test");
+        try {
+            Texture bgTexture = new Texture("textures/space_background.png");
+            Texture asteroidTexture = new Texture("textures/asteroid.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("background", bgTexture);
+                textureMap.put("asteroid", asteroidTexture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "background");
+                World world = new World();
+                
+                Entity entity = world.createEntity();
+                world.addComponent(entity, new Sprite(10, 20, "asteroid"));
+                
+                assertDoesNotThrow(() -> system.update(world, 0.016));
+            } finally {
+                asteroidTexture.destroy();
+                bgTexture.destroy();
+            }
+        } finally {
+            window.destroy();
+        }
+    }
+
+    @Test
+    void testUpdateWithMultipleEntities() {
+        Window window = new Window(100, 100, "Test");
+        try {
+            Texture bgTexture = new Texture("textures/space_background.png");
+            Texture asteroidTexture = new Texture("textures/asteroid.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("background", bgTexture);
+                textureMap.put("asteroid", asteroidTexture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "background");
+                World world = new World();
+                
+                Entity entity1 = world.createEntity();
+                world.addComponent(entity1, new Sprite(10, 20, "asteroid"));
+                
+                Entity entity2 = world.createEntity();
+                world.addComponent(entity2, new Sprite(50, 60, "asteroid"));
+                
+                Entity entity3 = world.createEntity();
+                world.addComponent(entity3, new Sprite(100, 150, "asteroid"));
+                
+                assertDoesNotThrow(() -> system.update(world, 0.016));
+            } finally {
+                asteroidTexture.destroy();
+                bgTexture.destroy();
+            }
+        } finally {
+            window.destroy();
+        }
+    }
+
+    @Test
+    void testUpdateMultipleFrames() {
+        Window window = new Window(100, 100, "Test");
+        try {
+            Texture bgTexture = new Texture("textures/space_background.png");
+            Texture asteroidTexture = new Texture("textures/asteroid.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("background", bgTexture);
+                textureMap.put("asteroid", asteroidTexture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "background");
+                World world = new World();
+                
+                Entity entity = world.createEntity();
+                world.addComponent(entity, new Sprite(10, 20, "asteroid"));
+                
+                assertDoesNotThrow(() -> {
+                    for (int frame = 0; frame < 5; frame++) {
+                        system.update(world, 0.016);
+                    }
+                });
+            } finally {
+                asteroidTexture.destroy();
+                bgTexture.destroy();
+            }
+        } finally {
+            window.destroy();
+        }
+    }
+
+    @Test
+    void testUpdateWithVariableDeltaTime() {
+        Window window = new Window(100, 100, "Test");
+        try {
+            Texture texture = new Texture("textures/space_background.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("bg", texture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
+                World world = new World();
+                
+                assertDoesNotThrow(() -> {
+                    system.update(world, 0.016);
+                    system.update(world, 0.0333);
+                    system.update(world, 0.008);
+                    system.update(world, 0.05);
+                });
+            } finally {
+                texture.destroy();
+            }
+        } finally {
+            window.destroy();
+        }
+    }
+
+    @Test
+    void testUpdateWithDifferentSpritePositions() {
+        Window window = new Window(100, 100, "Test");
+        try {
+            Texture bgTexture = new Texture("textures/space_background.png");
+            Texture asteroidTexture = new Texture("textures/asteroid.png");
+            try {
+                Map<String, Texture> textureMap = new HashMap<>();
+                textureMap.put("background", bgTexture);
+                textureMap.put("asteroid", asteroidTexture);
+                
+                TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "background");
+                World world = new World();
+                
+                // Add sprites at various positions
+                Entity entity1 = world.createEntity();
+                world.addComponent(entity1, new Sprite(0, 0, "asteroid"));
+                
+                Entity entity2 = world.createEntity();
+                world.addComponent(entity2, new Sprite(320, 240, "asteroid"));
+                
+                Entity entity3 = world.createEntity();
+                world.addComponent(entity3, new Sprite(-10, -20, "asteroid"));
+                
+                Entity entity4 = world.createEntity();
+                world.addComponent(entity4, new Sprite(640, 480, "asteroid"));
+                
+                assertDoesNotThrow(() -> system.update(world, 0.016));
+            } finally {
+                asteroidTexture.destroy();
+                bgTexture.destroy();
+            }
+        } finally {
+            window.destroy();
+        }
+    }
+
 }
