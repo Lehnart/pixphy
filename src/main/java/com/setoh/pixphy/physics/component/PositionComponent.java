@@ -30,5 +30,18 @@ public class PositionComponent implements Component {
     public void setY(double y){
         position.setY(y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PositionComponent that = (PositionComponent) o;
+        return position.equals(that.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return position.hashCode();
+    }
 }
 
