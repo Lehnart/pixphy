@@ -38,7 +38,7 @@ public final class TextureRenderSystem implements ECSSystem {
                 Sprite sprite = (Sprite) components.components().get(0);
                 Texture texture = textureMap.get(sprite.getTextureName());
                 renderer.draw(texture, sprite.getX()*2.f, sprite.getY()*2.f, texture.width()*2.f, texture.height()*2.f);
-            }    
-        }
+        }    
+    }
 
 }
