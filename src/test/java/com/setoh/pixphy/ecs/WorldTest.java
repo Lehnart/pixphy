@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.setoh.pixphy.physics.component.PositionComponent;
-import com.setoh.pixphy.physics.component.Velocity;
+import com.setoh.pixphy.physics.component.VelocityComponent;
 
 final class WorldTest {
     @Test
@@ -33,13 +33,13 @@ final class WorldTest {
         PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
 
-        assertNull(world.getComponent(entity, Velocity.class));
+        assertNull(world.getComponent(entity, VelocityComponent.class));
     }
 
     @Test
     void testGetComponentFromNonExistingEntity() {
         World world = new World();
-        assertNull(world.getComponent(new Entity(5), Velocity.class));
+        assertNull(world.getComponent(new Entity(5), VelocityComponent.class));
     }
 
     @Test
@@ -65,9 +65,9 @@ final class WorldTest {
         PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
 
-        world.removeComponent(entity, Velocity.class);
-        assertNull(world.getComponent(entity, Velocity.class));
-        assertFalse(world.hasComponent(entity, Velocity.class));
+        world.removeComponent(entity, VelocityComponent.class);
+        assertNull(world.getComponent(entity, VelocityComponent.class));
+        assertFalse(world.hasComponent(entity, VelocityComponent.class));
         
         assertEquals(position, world.getComponent(entity, PositionComponent.class));
         assertTrue(world.hasComponent(entity, PositionComponent.class));
@@ -91,15 +91,15 @@ final class WorldTest {
         Entity b = world.createEntity();
 
         world.addComponent(a, new PositionComponent(0.0, 0.0));
-        world.addComponent(a, new Velocity(1.0, 0.0));
+        world.addComponent(a, new VelocityComponent(1.0, 0.0));
         world.addComponent(b, new PositionComponent(5.0, 5.0));
 
-        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class));
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, VelocityComponent.class));
         assertEquals(1, results.size());
         EntityComponents result = results.get(0);
         assertEquals(a, result.entity());
         assertEquals(
-            List.of(new PositionComponent(0.0, 0.0), new Velocity(1.0, 0.0)),
+            List.of(new PositionComponent(0.0, 0.0), new VelocityComponent(1.0, 0.0)),
             result.components()
         );
     }
@@ -110,7 +110,7 @@ final class WorldTest {
         Entity a = world.createEntity();
         world.addComponent(a, new PositionComponent(0.0, 0.0));
 
-        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class));
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, VelocityComponent.class));
         assertEquals(0, results.size());
     }
 
@@ -129,12 +129,12 @@ final class WorldTest {
         World world = new World();
         Entity entity = world.createEntity();
         world.addComponent(entity, new PositionComponent(0.0, 0.0));
-        world.addComponent(entity, new Velocity(2.0, -1.0));
+        world.addComponent(entity, new VelocityComponent(2.0, -1.0));
 
         ECSSystem movementSystem = (ecsWorld, dt) -> {
-            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class))) {
+            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(PositionComponent.class, VelocityComponent.class))) {
                 PositionComponent position = (PositionComponent) result.components().get(0);
-                Velocity velocity = (Velocity) result.components().get(1);
+                VelocityComponent velocity = (VelocityComponent) result.components().get(1);
                 position.setX(position.getX() + velocity.getDx() * dt);
                 position.setY(position.getY() + velocity.getDy() * dt);
             }

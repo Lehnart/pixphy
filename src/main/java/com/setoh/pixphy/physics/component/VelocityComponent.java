@@ -2,11 +2,11 @@ package com.setoh.pixphy.physics.component;
 
 import com.setoh.pixphy.ecs.Component;
 
-public class Velocity implements Component {
+public class VelocityComponent implements Component {
     private double dx;
     private double dy;
 
-    public Velocity(double dx, double dy) {
+    public VelocityComponent(double dx, double dy) {
         this.setDx(dx);
         this.setDy(dy);
     }
@@ -36,7 +36,7 @@ public class Velocity implements Component {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Velocity velocity)) {
+        if (!(other instanceof VelocityComponent velocity)) {
             return false;
         }
         return Double.compare(velocity.getDx(), getDx()) == 0
