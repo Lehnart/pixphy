@@ -17,7 +17,7 @@ public class PositionUpdater implements ECSSystem {
             VelocityComponent velocityComponent = (VelocityComponent) components.components().get(0);
             PositionComponent positionComponent = (PositionComponent) components.components().get(1);
             positionComponent.setX(positionComponent.getX() + (velocityComponent.getDx()*dt));
-            positionComponent.setY(positionComponent.getY() + (velocityComponent.getDy()*dt));            
+            positionComponent.setY(positionComponent.getY() + (velocityComponent.getDy()*dt));
         }    
     }
 }

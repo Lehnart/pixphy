@@ -17,7 +17,7 @@ public class VelocityUpdater implements ECSSystem {
             AccelerationComponent accelerationComponent = (AccelerationComponent) components.components().get(0);
             VelocityComponent velocityComponent = (VelocityComponent) components.components().get(1);
             velocityComponent.setDx(velocityComponent.getDx() + (accelerationComponent.getDDx()*dt));
-            velocityComponent.setDy(velocityComponent.getDy() + (accelerationComponent.getDDy()*dt));            
+            velocityComponent.setDy(velocityComponent.getDy() + (accelerationComponent.getDDy()*dt));           
         }    
     }
 }
