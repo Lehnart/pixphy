@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.setoh.pixphy.physics.component.Position;
+import com.setoh.pixphy.physics.component.PositionComponent;
 import com.setoh.pixphy.physics.component.Velocity;
 
 final class WorldTest {
@@ -18,11 +18,11 @@ final class WorldTest {
         World world = new World();
         Entity entity = world.createEntity();
 
-        Position position = new Position(1.0, 2.0);
+        PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
 
-        assertEquals(position, world.getComponent(entity, Position.class));
-        assertTrue(world.hasComponent(entity, Position.class));
+        assertEquals(position, world.getComponent(entity, PositionComponent.class));
+        assertTrue(world.hasComponent(entity, PositionComponent.class));
     }
 
     @Test
@@ -30,7 +30,7 @@ final class WorldTest {
         World world = new World();
         Entity entity = world.createEntity();
 
-        Position position = new Position(1.0, 2.0);
+        PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
 
         assertNull(world.getComponent(entity, Velocity.class));
@@ -47,14 +47,14 @@ final class WorldTest {
         World world = new World();
         Entity entity = world.createEntity();
 
-        Position position = new Position(1.0, 2.0);
+        PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
-        assertEquals(position, world.getComponent(entity, Position.class));
-        assertTrue(world.hasComponent(entity, Position.class));
+        assertEquals(position, world.getComponent(entity, PositionComponent.class));
+        assertTrue(world.hasComponent(entity, PositionComponent.class));
 
-        world.removeComponent(entity, Position.class);
-        assertNull(world.getComponent(entity, Position.class));
-        assertFalse(world.hasComponent(entity, Position.class));
+        world.removeComponent(entity, PositionComponent.class);
+        assertNull(world.getComponent(entity, PositionComponent.class));
+        assertFalse(world.hasComponent(entity, PositionComponent.class));
     }
 
     @Test
@@ -62,26 +62,26 @@ final class WorldTest {
         World world = new World();
         Entity entity = world.createEntity();
 
-        Position position = new Position(1.0, 2.0);
+        PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
 
         world.removeComponent(entity, Velocity.class);
         assertNull(world.getComponent(entity, Velocity.class));
         assertFalse(world.hasComponent(entity, Velocity.class));
         
-        assertEquals(position, world.getComponent(entity, Position.class));
-        assertTrue(world.hasComponent(entity, Position.class));
+        assertEquals(position, world.getComponent(entity, PositionComponent.class));
+        assertTrue(world.hasComponent(entity, PositionComponent.class));
     }
 
         @Test
     void testRemoveNonExistingEntity() {
         World world = new World();
         Entity entity = world.createEntity();
-        Position position = new Position(1.0, 2.0);
+        PositionComponent position = new PositionComponent(1.0, 2.0);
         world.addComponent(entity, position);
-        world.removeComponent(new Entity(5), Position.class);
-        assertEquals(position, world.getComponent(entity, Position.class));
-        assertTrue(world.hasComponent(entity, Position.class));
+        world.removeComponent(new Entity(5), PositionComponent.class);
+        assertEquals(position, world.getComponent(entity, PositionComponent.class));
+        assertTrue(world.hasComponent(entity, PositionComponent.class));
     }
 
     @Test
@@ -90,16 +90,16 @@ final class WorldTest {
         Entity a = world.createEntity();
         Entity b = world.createEntity();
 
-        world.addComponent(a, new Position(0.0, 0.0));
+        world.addComponent(a, new PositionComponent(0.0, 0.0));
         world.addComponent(a, new Velocity(1.0, 0.0));
-        world.addComponent(b, new Position(5.0, 5.0));
+        world.addComponent(b, new PositionComponent(5.0, 5.0));
 
-        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(Position.class, Velocity.class));
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class));
         assertEquals(1, results.size());
         EntityComponents result = results.get(0);
         assertEquals(a, result.entity());
         assertEquals(
-            List.of(new Position(0.0, 0.0), new Velocity(1.0, 0.0)),
+            List.of(new PositionComponent(0.0, 0.0), new Velocity(1.0, 0.0)),
             result.components()
         );
     }
@@ -108,9 +108,9 @@ final class WorldTest {
     void testGetEntitiesWithNoComponents() {
         World world = new World();
         Entity a = world.createEntity();
-        world.addComponent(a, new Position(0.0, 0.0));
+        world.addComponent(a, new PositionComponent(0.0, 0.0));
 
-        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(Position.class, Velocity.class));
+        List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class));
         assertEquals(0, results.size());
     }
 
@@ -118,7 +118,7 @@ final class WorldTest {
     void testGetEntitiesWithComponentsWithEmptyList() {
         World world = new World();
         Entity a = world.createEntity();
-        world.addComponent(a, new Position(0.0, 0.0));
+        world.addComponent(a, new PositionComponent(0.0, 0.0));
 
         List<EntityComponents> results = (List<EntityComponents>) world.getEntitiesWithComponents(List.of());
         assertEquals(0, results.size());
@@ -128,12 +128,12 @@ final class WorldTest {
     void testRunSystems(){
         World world = new World();
         Entity entity = world.createEntity();
-        world.addComponent(entity, new Position(0.0, 0.0));
+        world.addComponent(entity, new PositionComponent(0.0, 0.0));
         world.addComponent(entity, new Velocity(2.0, -1.0));
 
         ECSSystem movementSystem = (ecsWorld, dt) -> {
-            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(Position.class, Velocity.class))) {
-                Position position = (Position) result.components().get(0);
+            for (EntityComponents result : ecsWorld.getEntitiesWithComponents(List.of(PositionComponent.class, Velocity.class))) {
+                PositionComponent position = (PositionComponent) result.components().get(0);
                 Velocity velocity = (Velocity) result.components().get(1);
                 position.setX(position.getX() + velocity.getDx() * dt);
                 position.setY(position.getY() + velocity.getDy() * dt);
@@ -143,8 +143,8 @@ final class WorldTest {
         world.addSystem(movementSystem);
         world.runSystems(0.5);
 
-        Position updated = world.getComponent(entity, Position.class);
-        assertEquals(new Position(1.0, -0.5), updated);
+        PositionComponent updated = world.getComponent(entity, PositionComponent.class);
+        assertEquals(new PositionComponent(1.0, -0.5), updated);
     }
 
     @Test

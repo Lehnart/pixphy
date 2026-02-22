@@ -48,4 +48,31 @@ final class SpriteTest {
         assertEquals("textures/negative.png", sprite.getTextureName());
     }
 
+    @Test
+    void testSetXUpdatesValue() {
+        Sprite sprite = new Sprite(10, 20, "textures/asteroid.png");
+        sprite.setX(42.0);
+        assertEquals(42, sprite.getX());
+    }
+
+    @Test
+    void testSetYUpdatesValue() {
+        Sprite sprite = new Sprite(10, 20, "textures/asteroid.png");
+        sprite.setY(64.0);
+        assertEquals(64, sprite.getY());
+    }
+
+    @Test
+    void testSetXTruncatesPositiveDouble() {
+        Sprite sprite = new Sprite(0, 0, "textures/asteroid.png");
+        sprite.setX(12.99);
+        assertEquals(12, sprite.getX());
+    }
+
+    @Test
+    void testSetYTruncatesNegativeDoubleTowardZero() {
+        Sprite sprite = new Sprite(0, 0, "textures/asteroid.png");
+        sprite.setY(-7.8);
+        assertEquals(-7, sprite.getY());
+    }
 }

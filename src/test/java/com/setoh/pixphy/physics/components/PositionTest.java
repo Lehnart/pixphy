@@ -12,23 +12,32 @@ import com.setoh.pixphy.physics.component.Position;
 final class PositionTest {
 
     @Test
-    void testConstructorAndFields() {
+    void testConstructorAndAccessors() {
         Position position = new Position(1.5, -2.25);
-        assertEquals(1.5, position.getX());
-        assertEquals(-2.25, position.getY());
+        assertEquals(1.5, position.x());
+        assertEquals(-2.25, position.y());
+    }
+
+    @Test
+    void testSetters() {
+        Position position = new Position(0, 0);
+        position.setX(4.2);
+        position.setY(-3.8);
+        assertEquals(4.2, position.x());
+        assertEquals(-3.8, position.y());
     }
 
     @Test
     void testEqualsSameInstance() {
-        Position position = new Position(1.0, 2.0);
-        assertSame(position, position);
-        assertEquals(position, position);
+        Position pos = new Position(2.0, 3.0);
+        assertSame(pos, pos);
+        assertEquals(pos, pos);
     }
 
     @Test
     void testEqualsSameValues() {
-        Position a = new Position(3.0, 4.0);
-        Position b = new Position(3.0, 4.0);
+        Position a = new Position(5.0, 6.0);
+        Position b = new Position(5.0, 6.0);
         assertNotSame(a, b);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
@@ -36,17 +45,18 @@ final class PositionTest {
 
     @Test
     void testEqualsDifferentValues() {
-        Position a = new Position(3.0, 4.0);
-        Position b = new Position(3.0, 5.0);
-        Position c = new Position(6.0, 4.0);
+        Position a = new Position(5.0, 6.0);
+        Position b = new Position(5.0, 6.1);
+        Position c = new Position(7.0, 6.0);
         assertNotEquals(a, b);
         assertNotEquals(a, c);
+        assertNotEquals(b, c);
     }
 
     @Test
     void testEqualsOtherType() {
-        Position position = new Position(1.0, 2.0);
-        assertNotEquals("Position(1,2)", position);
-        assertNotEquals(position, null);
+        Position pos = new Position(1.0, 2.0);
+        assertNotEquals(pos, "Position(1,2)");
+        assertNotEquals(pos, null);
     }
 }
