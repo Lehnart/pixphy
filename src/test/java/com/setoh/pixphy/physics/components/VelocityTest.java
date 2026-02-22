@@ -7,27 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
-import com.setoh.pixphy.physics.component.Velocity;
+import com.setoh.pixphy.physics.component.VelocityComponent;
 
 final class VelocityTest {
     @Test
     void testConstructorAndFields() {
-        Velocity velocity = new Velocity(0.5, -1.75);
+        VelocityComponent velocity = new VelocityComponent(0.5, -1.75);
         assertEquals(0.5, velocity.getDx());
         assertEquals(-1.75, velocity.getDy());
     }
 
     @Test
     void testEqualsSameInstance() {
-        Velocity velocity = new Velocity(1.0, 2.0);
+        VelocityComponent velocity = new VelocityComponent(1.0, 2.0);
         assertSame(velocity, velocity);
         assertEquals(velocity, velocity);
     }
 
     @Test
     void testEqualsSameValues() {
-        Velocity a = new Velocity(3.0, 4.0);
-        Velocity b = new Velocity(3.0, 4.0);
+        VelocityComponent a = new VelocityComponent(3.0, 4.0);
+        VelocityComponent b = new VelocityComponent(3.0, 4.0);
         assertNotSame(a, b);
         assertEquals(a, b);
         assertEquals(a.hashCode(), b.hashCode());
@@ -35,9 +35,9 @@ final class VelocityTest {
 
     @Test
     void testEqualsDifferentValues() {
-        Velocity a = new Velocity(3.0, 4.0);
-        Velocity b = new Velocity(3.0, 5.0);
-        Velocity c = new Velocity(6.0, 4.0);
+        VelocityComponent a = new VelocityComponent(3.0, 4.0);
+        VelocityComponent b = new VelocityComponent(3.0, 5.0);
+        VelocityComponent c = new VelocityComponent(6.0, 4.0);
         assertNotEquals(a, b);
         assertNotEquals(a, c);
         assertNotEquals(b, c);
@@ -45,7 +45,7 @@ final class VelocityTest {
 
     @Test
     void testEqualsOtherType() {
-        Velocity velocity = new Velocity(1.0, 2.0);
+        VelocityComponent velocity = new VelocityComponent(1.0, 2.0);
         assertNotEquals("Velocity(1,2)", velocity);
         assertNotEquals(velocity, null);
     }
