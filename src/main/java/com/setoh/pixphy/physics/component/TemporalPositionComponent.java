@@ -6,13 +6,13 @@ import com.setoh.pixphy.ecs.Component;
 
 public class TemporalPositionComponent implements Component {
 
-    private Function<Double, Position> temporalFunction;
+    private Function<Double, Vector2D> temporalFunction;
 
-    public TemporalPositionComponent(Function<Double, Position> temporalFunction) {
+    public TemporalPositionComponent(Function<Double, Vector2D> temporalFunction) {
         this.temporalFunction = temporalFunction;
     }
 
-    public Position getPosition(double t) {
+    public Vector2D getPosition(double t) {
         return temporalFunction.apply(t);
         
     }

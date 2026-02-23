@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.Test;
 
 import com.setoh.pixphy.physics.component.PositionComponent;
-import com.setoh.pixphy.physics.component.Position;
+import com.setoh.pixphy.physics.component.Vector2D;
 
 final class PositionComponentTest {
 
@@ -18,7 +18,7 @@ final class PositionComponentTest {
         assertEquals(1.0, comp.getX());
         assertEquals(2.0, comp.getY());
         // underlying position
-        Position p = comp.getPosition();
+        Vector2D p = comp.getPosition();
         assertEquals(1.0, p.x());
         assertEquals(2.0, p.y());
     }
@@ -35,7 +35,7 @@ final class PositionComponentTest {
     @Test
     void testGetPositionReference() {
         PositionComponent comp = new PositionComponent(1.1, 2.2);
-        Position p = comp.getPosition();
+        Vector2D p = comp.getPosition();
         // mutate returned object
         p.setX(9.9);
         p.setY(-8.8);

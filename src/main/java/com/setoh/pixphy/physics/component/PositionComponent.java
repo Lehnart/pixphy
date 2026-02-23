@@ -4,13 +4,13 @@ import com.setoh.pixphy.ecs.Component;
 
 public class PositionComponent implements Component {
 
-    private Position position;
+    private Vector2D position;
 
     public PositionComponent(double x, double y) {
-        this.position = new Position(x,y);
+        this.position = new Vector2D(x,y);
     }
 
-    public Position getPosition() {
+    public Vector2D getPosition() {
         return position;
         
     }
