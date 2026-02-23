@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.setoh.pixphy.ecs.Entity;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.component.Sprite;
-import com.setoh.pixphy.physics.component.Position;
+import com.setoh.pixphy.physics.component.Vector2D;
 import com.setoh.pixphy.physics.component.TemporalPositionComponent;
 
 final class TemporalPositionSpriteUpdaterTest {
@@ -19,7 +19,7 @@ final class TemporalPositionSpriteUpdaterTest {
         Entity entity = world.createEntity();
         Sprite sprite = new Sprite(0, 0, "textures/asteroid.png");
 
-        world.addComponent(entity, new TemporalPositionComponent(t -> new Position(t * 10.0, t * 20.0)));
+        world.addComponent(entity, new TemporalPositionComponent(t -> new Vector2D(t * 10.0, t * 20.0)));
         world.addComponent(entity, sprite);
 
         TemporalPositionSpriteUpdater updater = new TemporalPositionSpriteUpdater();
@@ -35,7 +35,7 @@ final class TemporalPositionSpriteUpdaterTest {
         Entity entity = world.createEntity();
         Sprite sprite = new Sprite(0, 0, "textures/asteroid.png");
 
-        world.addComponent(entity, new TemporalPositionComponent(t -> new Position(t * 10.0, -t * 10.0)));
+        world.addComponent(entity, new TemporalPositionComponent(t -> new Vector2D(t * 10.0, -t * 10.0)));
         world.addComponent(entity, sprite);
 
         TemporalPositionSpriteUpdater updater = new TemporalPositionSpriteUpdater();
@@ -53,7 +53,7 @@ final class TemporalPositionSpriteUpdaterTest {
 
         Entity fullEntity = world.createEntity();
         Sprite fullSprite = new Sprite(1, 2, "textures/full.png");
-        world.addComponent(fullEntity, new TemporalPositionComponent(t -> new Position(7.0, 9.0)));
+        world.addComponent(fullEntity, new TemporalPositionComponent(t -> new Vector2D(7.0, 9.0)));
         world.addComponent(fullEntity, fullSprite);
 
         Entity spriteOnlyEntity = world.createEntity();
@@ -61,7 +61,7 @@ final class TemporalPositionSpriteUpdaterTest {
         world.addComponent(spriteOnlyEntity, spriteOnly);
 
         Entity temporalOnlyEntity = world.createEntity();
-        world.addComponent(temporalOnlyEntity, new TemporalPositionComponent(t -> new Position(999.0, 999.0)));
+        world.addComponent(temporalOnlyEntity, new TemporalPositionComponent(t -> new Vector2D(999.0, 999.0)));
 
         TemporalPositionSpriteUpdater updater = new TemporalPositionSpriteUpdater();
 

@@ -6,7 +6,7 @@ import com.setoh.pixphy.ecs.ECSSystem;
 import com.setoh.pixphy.ecs.EntityComponents;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.component.Sprite;
-import com.setoh.pixphy.physics.component.Position;
+import com.setoh.pixphy.physics.component.Vector2D;
 import com.setoh.pixphy.physics.component.TemporalPositionComponent;
 
 public class TemporalPositionSpriteUpdater implements ECSSystem {
@@ -20,7 +20,7 @@ public class TemporalPositionSpriteUpdater implements ECSSystem {
         for(EntityComponents components : entityComponents) {
             TemporalPositionComponent temporalPositionComponent = (TemporalPositionComponent) components.components().get(0);
             Sprite sprite = (Sprite) components.components().get(1);
-            Position pos = temporalPositionComponent.getPosition(t);
+            Vector2D pos = temporalPositionComponent.getPosition(t);
             sprite.setX(pos.x());
             sprite.setY(pos.y());
         }    
