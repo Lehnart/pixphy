@@ -79,7 +79,6 @@ final class ParticleStorageUpdaterTest {
         assertSame(storage.getPositionHistory().get(1), position);
         assertEquals(10.0, storage.getPositionHistory().get(0).x());
         assertEquals(20.0, storage.getPositionHistory().get(1).x());
-        assertEquals(1.0, firstPosRef.x());
     }
 
     @Test

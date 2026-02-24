@@ -11,7 +11,7 @@ public class ParticleStorageComponent implements Component {
     private final Vector2D[] velocityBuffer;
     private final Vector2D[] accelerationBuffer;
 
-    private int currentIndex = 0;
+    private int currentIndex = -1;
     private int currentSize = 0;
     private int maxSize = 0;
 
@@ -26,19 +26,13 @@ public class ParticleStorageComponent implements Component {
     }
 
     public void addState(Vector2D position, Vector2D velocity, Vector2D acceleration) {
+        currentIndex = (currentIndex+1) % maxSize;
         if (currentSize < maxSize) {
-            int insertIndex = (currentIndex + currentSize) % maxSize;
-            positionBuffer[insertIndex] = position;
-            velocityBuffer[insertIndex] = velocity;
-            accelerationBuffer[insertIndex] = acceleration;
             currentSize++;
-            return;
         }
-
         positionBuffer[currentIndex] = position;
         velocityBuffer[currentIndex] = velocity;
-        accelerationBuffer[currentIndex] = acceleration;
-        currentIndex = (currentIndex + 1) % maxSize;
+        accelerationBuffer[currentIndex] = acceleration;        
     }
 
     public int currentSize() {
@@ -63,9 +57,16 @@ public class ParticleStorageComponent implements Component {
 
     private List<Vector2D> getHistory(Vector2D[] buffer) {
         List<Vector2D> history = new ArrayList<>(currentSize);
-        for (int i = 0; i < currentSize; i++) {
-            int index = (currentSize + i) % buffer.length;
-            history.add(buffer[index]);
+        if(currentSize >= maxSize){
+            for (int i = 0; i < currentSize; i++) {
+                int index = (currentIndex + 1 + i) % maxSize;
+                history.add(buffer[index]);
+            }
+        }
+        else{
+            for (int i = 0; i < currentSize; i++) {
+                history.add(buffer[i]);
+            }
         }
         return history;
     }
