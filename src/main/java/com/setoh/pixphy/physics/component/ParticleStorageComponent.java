@@ -1,6 +1,7 @@
 package com.setoh.pixphy.physics.component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.setoh.pixphy.ecs.Component;
@@ -64,9 +65,7 @@ public class ParticleStorageComponent implements Component {
             }
         }
         else{
-            for (int i = 0; i < currentSize; i++) {
-                history.add(buffer[i]);
-            }
+            history = Arrays.asList(Arrays.copyOf(buffer, currentSize));
         }
         return history;
     }

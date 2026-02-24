@@ -56,9 +56,7 @@ final class ParticleStorageUpdaterTest {
         world.addComponent(entity, storage);
 
         ParticleStorageUpdater updater = new ParticleStorageUpdater();
-
         updater.update(world, 0.016);
-        Vector2D firstPosRef = storage.getPositionHistory().get(0);
 
         position = new Vector2D(10.0, 10.0);
         velocity = new Vector2D(2.0, 2.0);
