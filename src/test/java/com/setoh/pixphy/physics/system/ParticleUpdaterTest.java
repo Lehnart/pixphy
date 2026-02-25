@@ -27,10 +27,10 @@ final class ParticleUpdaterTest {
 
         new ParticleUpdater().update(world, 0.5);
 
-        assertEquals(2.0, particle.getVelocity().x());
-        assertEquals(0.0, particle.getVelocity().y());
-        assertEquals(1.0, particle.getPosition().x());
-        assertEquals(0.0, particle.getPosition().y());
+        assertEquals(1.0, particle.getVelocity().x());
+        assertEquals(-2.0, particle.getVelocity().y());
+        assertEquals(0.5, particle.getPosition().x());
+        assertEquals(-1.0, particle.getPosition().y());
     }
 
     @Test
@@ -48,14 +48,14 @@ final class ParticleUpdaterTest {
         new ParticleUpdater().update(world, 1.0);
 
         assertEquals(0.0, p1.getVelocity().x());
-        assertEquals(2.0, p1.getVelocity().y());
+        assertEquals(1.0, p1.getVelocity().y());
         assertEquals(0.0, p1.getPosition().x());
-        assertEquals(2.0, p1.getPosition().y());
+        assertEquals(1.0, p1.getPosition().y());
 
         assertEquals(-1.0, p2.getVelocity().x());
-        assertEquals(-2.0, p2.getVelocity().y());
+        assertEquals(0.0, p2.getVelocity().y());
         assertEquals(4.0, p2.getPosition().x());
-        assertEquals(3.0, p2.getPosition().y());
+        assertEquals(5.0, p2.getPosition().y());
     }
 
     @Test
