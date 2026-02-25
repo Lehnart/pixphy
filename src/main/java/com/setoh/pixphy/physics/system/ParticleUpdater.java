@@ -1,6 +1,7 @@
 package com.setoh.pixphy.physics.system;
 
 import java.util.List;
+import java.util.function.Function;
 
 import com.setoh.pixphy.ecs.ECSSystem;
 import com.setoh.pixphy.ecs.EntityComponents;
@@ -18,6 +19,12 @@ public class ParticleUpdater implements ECSSystem {
             Vector2D v = p.getVelocity();
             Vector2D a = p.getAcceleration();
             Vector2D pos = p.getPosition();
+            Function<Vector2D, Vector2D> forceFunction = p.getPositionalForce();
+            Vector2D force = forceFunction.apply(pos);
+            
+            a.setX(force.x() / p.getMass());
+            a.setY(force.y() / p.getMass());
+
 
             v.setX(v.x() + (a.x()*dt));
             v.setY(v.y() + (a.y()*dt));
