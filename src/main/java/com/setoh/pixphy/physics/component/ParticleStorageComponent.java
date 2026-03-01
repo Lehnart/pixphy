@@ -31,9 +31,9 @@ public class ParticleStorageComponent implements Component {
         if (currentSize < maxSize) {
             currentSize++;
         }
-        positionBuffer[currentIndex] = position;
-        velocityBuffer[currentIndex] = velocity;
-        accelerationBuffer[currentIndex] = acceleration;        
+        positionBuffer[currentIndex] = new Vector2D(position);
+        velocityBuffer[currentIndex] = new Vector2D(velocity);
+        accelerationBuffer[currentIndex] = new Vector2D(acceleration);        
     }
 
     public int currentSize() {
