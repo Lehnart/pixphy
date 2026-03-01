@@ -1,6 +1,5 @@
 package com.setoh.pixphy.plot.system;
 
-import java.util.Comparator;
 import java.util.List;
 
 import com.setoh.pixphy.ecs.ECSSystem;
