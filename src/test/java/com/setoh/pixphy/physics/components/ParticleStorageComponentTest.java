@@ -1,6 +1,7 @@
 package com.setoh.pixphy.physics.components;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -89,5 +90,58 @@ final class ParticleStorageComponentTest {
         assertEquals(p, storage.getPositionHistory().get(0));
         assertEquals(v, storage.getVelocityHistory().get(0));
         assertEquals(a, storage.getAccelerationHistory().get(0));
+    }
+
+    @Test
+    void addStateCopiesInputVectorsDefensively() {
+        ParticleStorageComponent storage = new ParticleStorageComponent(2);
+
+        Vector2D p = new Vector2D(1.0, 2.0);
+        Vector2D v = new Vector2D(3.0, 4.0);
+        Vector2D a = new Vector2D(5.0, 6.0);
+
+        storage.addState(p, v, a, 0.1);
+        p.setX(100.0);
+        v.setY(200.0);
+        a.setX(300.0);
+
+        assertEquals(new Vector2D(1.0, 2.0), storage.getPositionHistory().get(0));
+        assertEquals(new Vector2D(3.0, 4.0), storage.getVelocityHistory().get(0));
+        assertEquals(new Vector2D(5.0, 6.0), storage.getAccelerationHistory().get(0));
+        assertNotSame(p, storage.getPositionHistory().get(0));
+        assertNotSame(v, storage.getVelocityHistory().get(0));
+        assertNotSame(a, storage.getAccelerationHistory().get(0));
+    }
+
+    @Test
+    void getTimeHistoryReturnsChronologicalOrderBeforeAndAfterWrap() {
+        ParticleStorageComponent storage = new ParticleStorageComponent(3);
+
+        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(1.0, 1.0), new Vector2D(1.0, 1.0), 0.1);
+        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(2.0, 2.0), new Vector2D(2.0, 2.0), 0.2);
+        assertEquals(List.of(0.1, 0.2), storage.getTimeHistory());
+
+        storage.addState(new Vector2D(3.0, 3.0), new Vector2D(3.0, 3.0), new Vector2D(3.0, 3.0), 0.3);
+        storage.addState(new Vector2D(4.0, 4.0), new Vector2D(4.0, 4.0), new Vector2D(4.0, 4.0), 0.4);
+        assertEquals(List.of(0.2, 0.3, 0.4), storage.getTimeHistory());
+    }
+
+    @Test
+    void addStateAfterMultipleWrapsKeepsOnlyLatestValuesInOrder() {
+        ParticleStorageComponent storage = new ParticleStorageComponent(3);
+
+        for (int i = 1; i <= 6; i++) {
+            double value = i;
+            storage.addState(
+                new Vector2D(value, value),
+                new Vector2D(value * 10.0, value * 10.0),
+                new Vector2D(value * 100.0, value * 100.0),
+                value
+            );
+        }
+
+        assertEquals(3, storage.currentSize());
+        assertEquals(List.of(new Vector2D(4.0, 4.0), new Vector2D(5.0, 5.0), new Vector2D(6.0, 6.0)), storage.getPositionHistory());
+        assertEquals(List.of(4.0, 5.0, 6.0), storage.getTimeHistory());
     }
 }
