@@ -15,10 +15,14 @@ public final class PlotRenderSystem implements ECSSystem {
 
     private final TexturedQuadRenderer renderer;
     private final Texture markerTexture; 
+    private final Texture hBarTexture;
+    private final Texture vBarTexture;
 
     public PlotRenderSystem(TextureMap textureMap, int viewportWidth, int viewportHeight) {
         renderer = new TexturedQuadRenderer(viewportWidth, viewportHeight);
         this.markerTexture = textureMap.get(TextureMap.MARKER_TEXTURE);
+        this.hBarTexture = textureMap.get(TextureMap.HDASH_TEXTURE);
+        this.vBarTexture = textureMap.get(TextureMap.VDASH_TEXTURE);
     }
 
     @Override
@@ -26,6 +30,13 @@ public final class PlotRenderSystem implements ECSSystem {
         List<EntityComponents> entityComponents = world.getEntitiesWithComponents(List.of(PlotComponent.class));
         for(EntityComponents components : entityComponents) {
             PlotComponent plot = (PlotComponent) components.components().get(0);
+            for(Point p: plot.hBars()){
+                renderer.draw(hBarTexture, p.x()*2.f,  p.y()*2.f, hBarTexture.width()*2.f, hBarTexture.height()*2.f);
+            }
+            for(Point p: plot.vBars()){
+                renderer.draw(vBarTexture, p.x()*2.f,  p.y()*2.f, vBarTexture.width()*2.f, vBarTexture.height()*2.f);
+            }
+
             for(Point p : plot.points()){
                 renderer.draw(markerTexture, p.x()*2.f,  p.y()*2.f, markerTexture.width()*2.f, markerTexture.height()*2.f);
             }

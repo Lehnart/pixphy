@@ -11,6 +11,7 @@ public class ParticleStorageComponent implements Component {
     private final Vector2D[] positionBuffer;
     private final Vector2D[] velocityBuffer;
     private final Vector2D[] accelerationBuffer;
+    private final Double[] timeBuffer;
 
     private int currentIndex = -1;
     private int currentSize = 0;
@@ -24,16 +25,18 @@ public class ParticleStorageComponent implements Component {
         this.positionBuffer = new Vector2D[bufferSize];
         this.velocityBuffer = new Vector2D[bufferSize];
         this.accelerationBuffer = new Vector2D[bufferSize];
+        this.timeBuffer = new Double[bufferSize];
     }
 
-    public void addState(Vector2D position, Vector2D velocity, Vector2D acceleration) {
+    public void addState(Vector2D position, Vector2D velocity, Vector2D acceleration, double t) {
         currentIndex = (currentIndex+1) % maxSize;
         if (currentSize < maxSize) {
             currentSize++;
         }
         positionBuffer[currentIndex] = new Vector2D(position);
         velocityBuffer[currentIndex] = new Vector2D(velocity);
-        accelerationBuffer[currentIndex] = new Vector2D(acceleration);        
+        accelerationBuffer[currentIndex] = new Vector2D(acceleration);    
+        timeBuffer[currentIndex] = t;
     }
 
     public int currentSize() {
@@ -54,6 +57,20 @@ public class ParticleStorageComponent implements Component {
 
     public List<Vector2D> getAccelerationHistory() {
         return getHistory(accelerationBuffer);
+    }
+
+    public List<Double> getTimeHistory() {
+        List<Double> history = new ArrayList<>(currentSize);
+        if(currentSize >= maxSize){
+            for (int i = 0; i < currentSize; i++) {
+                int index = (currentIndex + 1 + i) % maxSize;
+                history.add(timeBuffer[index]);
+            }
+        }
+        else{
+            history = Arrays.asList(Arrays.copyOf(timeBuffer, currentSize));
+        }
+        return history;
     }
 
     private List<Vector2D> getHistory(Vector2D[] buffer) {
