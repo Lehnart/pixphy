@@ -8,10 +8,10 @@ import com.setoh.pixphy.ecs.Entity;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.component.Sprite;
 import com.setoh.pixphy.graphics.resource.Texture;
+import com.setoh.pixphy.graphics.resource.TextureMap;
 import com.setoh.pixphy.graphics.resource.Window;
 
 import java.util.HashMap;
-import java.util.Map;
 
 final class TextureRenderSystemTest {
 
@@ -21,7 +21,7 @@ final class TextureRenderSystemTest {
         try {
             Texture mockTexture = new Texture("textures/space_background.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("bg", mockTexture);
                 
                 TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
@@ -40,7 +40,7 @@ final class TextureRenderSystemTest {
         try {
             Texture texture = new Texture("textures/space_background.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("bg", texture);
                 
                 new TextureRenderSystem(textureMap, 800, 600, "bg");
@@ -64,7 +64,7 @@ final class TextureRenderSystemTest {
         try {
             Texture texture = new Texture("textures/space_background.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("bg", texture);
                 
                 TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
@@ -86,7 +86,7 @@ final class TextureRenderSystemTest {
             Texture bgTexture = new Texture("textures/space_background.png");
             Texture asteroidTexture = new Texture("textures/asteroid.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("background", bgTexture);
                 textureMap.put("asteroid", asteroidTexture);
                 
@@ -113,7 +113,7 @@ final class TextureRenderSystemTest {
             Texture bgTexture = new Texture("textures/space_background.png");
             Texture asteroidTexture = new Texture("textures/asteroid.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("background", bgTexture);
                 textureMap.put("asteroid", asteroidTexture);
                 
@@ -146,7 +146,7 @@ final class TextureRenderSystemTest {
             Texture bgTexture = new Texture("textures/space_background.png");
             Texture asteroidTexture = new Texture("textures/asteroid.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("background", bgTexture);
                 textureMap.put("asteroid", asteroidTexture);
                 
@@ -176,7 +176,7 @@ final class TextureRenderSystemTest {
         try {
             Texture texture = new Texture("textures/space_background.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("bg", texture);
                 
                 TextureRenderSystem system = new TextureRenderSystem(textureMap, 640, 480, "bg");
@@ -203,7 +203,7 @@ final class TextureRenderSystemTest {
             Texture bgTexture = new Texture("textures/space_background.png");
             Texture asteroidTexture = new Texture("textures/asteroid.png");
             try {
-                Map<String, Texture> textureMap = new HashMap<>();
+                TextureMap textureMap = new TextureMap(new HashMap<>());
                 textureMap.put("background", bgTexture);
                 textureMap.put("asteroid", asteroidTexture);
                 

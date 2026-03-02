@@ -6,6 +6,7 @@ import com.setoh.pixphy.ecs.ECSSystem;
 import com.setoh.pixphy.ecs.EntityComponents;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.resource.Texture;
+import com.setoh.pixphy.graphics.resource.TextureMap;
 import com.setoh.pixphy.graphics.resource.TexturedQuadRenderer;
 import com.setoh.pixphy.plot.component.PlotComponent;
 import com.setoh.pixphy.plot.component.PlotComponent.Point;
@@ -15,9 +16,9 @@ public final class PlotRenderSystem implements ECSSystem {
     private final TexturedQuadRenderer renderer;
     private final Texture markerTexture; 
 
-    public PlotRenderSystem(Texture markerTexture, int viewportWidth, int viewportHeight) {
+    public PlotRenderSystem(TextureMap textureMap, int viewportWidth, int viewportHeight) {
         renderer = new TexturedQuadRenderer(viewportWidth, viewportHeight);
-        this.markerTexture = markerTexture;
+        this.markerTexture = textureMap.get(TextureMap.MARKER_TEXTURE);
     }
 
     @Override

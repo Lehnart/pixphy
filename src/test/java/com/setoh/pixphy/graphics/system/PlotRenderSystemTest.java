@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.setoh.pixphy.ecs.Entity;
 import com.setoh.pixphy.ecs.World;
-import com.setoh.pixphy.graphics.resource.Texture;
+import com.setoh.pixphy.graphics.resource.TextureMap;
 import com.setoh.pixphy.graphics.resource.Window;
 import com.setoh.pixphy.plot.component.PlotComponent;
 import com.setoh.pixphy.plot.component.PlotComponent.Point;
@@ -19,14 +19,12 @@ final class PlotRenderSystemTest {
     void updateDoesNotThrowWhenWorldHasNoPlotEntities() {
         Window window = new Window(100, 100, "Test");
         try {
-            Texture marker = new Texture("textures/marker.png");
             try {
-                PlotRenderSystem system = new PlotRenderSystem(marker, 640, 480);
+                PlotRenderSystem system = new PlotRenderSystem(new TextureMap(), 640, 480);
                 World world = new World();
 
                 assertDoesNotThrow(() -> system.update(world, 0.016));
             } finally {
-                marker.destroy();
             }
         } finally {
             window.destroy();
@@ -37,9 +35,9 @@ final class PlotRenderSystemTest {
     void updateDoesNotThrowForEmptyAndPopulatedPlots() {
         Window window = new Window(100, 100, "Test");
         try {
-            Texture marker = new Texture("textures/marker.png");
+            TextureMap textureMap = new TextureMap();
             try {
-                PlotRenderSystem system = new PlotRenderSystem(marker, 640, 480);
+                PlotRenderSystem system = new PlotRenderSystem(textureMap, 640, 480);
                 World world = new World();
 
                 Entity sourceEntity = world.createEntity();
@@ -61,7 +59,6 @@ final class PlotRenderSystemTest {
 
                 assertDoesNotThrow(() -> system.update(world, 0.016));
             } finally {
-                marker.destroy();
             }
         } finally {
             window.destroy();

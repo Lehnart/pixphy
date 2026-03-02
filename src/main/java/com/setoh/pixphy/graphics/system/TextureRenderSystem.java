@@ -5,6 +5,7 @@ import com.setoh.pixphy.ecs.EntityComponents;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.graphics.component.Sprite;
 import com.setoh.pixphy.graphics.resource.Texture;
+import com.setoh.pixphy.graphics.resource.TextureMap;
 import com.setoh.pixphy.graphics.resource.TexturedQuadRenderer;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -12,15 +13,14 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 
 import java.util.List;
-import java.util.Map;
 
 public final class TextureRenderSystem implements ECSSystem {
 
     private final TexturedQuadRenderer renderer;
-    private final Map<String, Texture> textureMap;
+    private final TextureMap textureMap;
     private final String backgroundTextureName; 
 
-    public TextureRenderSystem(Map<String, Texture> textureMap, int viewportWidth, int viewportHeight, String background) {
+    public TextureRenderSystem(TextureMap textureMap, int viewportWidth, int viewportHeight, String background) {
         this.textureMap = textureMap;
         backgroundTextureName = background;
         renderer = new TexturedQuadRenderer(viewportWidth, viewportHeight);
