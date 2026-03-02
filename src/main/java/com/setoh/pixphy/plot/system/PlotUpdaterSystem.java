@@ -11,7 +11,6 @@ import com.setoh.pixphy.plot.component.PlotComponent;
 
 public class PlotUpdaterSystem implements ECSSystem{
 
-
     @Override
     public void update(World world, double dt) {
         List<EntityComponents> entityComponents = world.getEntitiesWithComponents(List.of(PlotComponent.class));

@@ -15,7 +15,6 @@ public class Vector2D{
         this.y = v.y;
     }
 
-
     public double x(){
         return x;
     }
