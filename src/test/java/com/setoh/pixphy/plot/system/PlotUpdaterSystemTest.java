@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import com.setoh.pixphy.ecs.Entity;
 import com.setoh.pixphy.ecs.World;
 import com.setoh.pixphy.physics.component.ParticleStorageComponent;
+import com.setoh.pixphy.physics.component.Vector2D;
 import com.setoh.pixphy.plot.component.PlotComponent;
 import com.setoh.pixphy.plot.component.PlotComponent.Point;
 
@@ -21,8 +22,8 @@ final class PlotUpdaterSystemTest {
 
         Entity sourceEntity = world.createEntity();
         ParticleStorageComponent storage = new ParticleStorageComponent(5);
-        storage.addState(null, null, null);
-        storage.addState(null, null, null);
+        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
+        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02));
         world.addComponent(sourceEntity, storage);
 
         Entity plotEntity = world.createEntity();
@@ -47,14 +48,14 @@ final class PlotUpdaterSystemTest {
 
         Entity sourceA = world.createEntity();
         ParticleStorageComponent storageA = new ParticleStorageComponent(4);
-        storageA.addState(null, null, null);
+        storageA.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
         world.addComponent(sourceA, storageA);
 
         Entity sourceB = world.createEntity();
         ParticleStorageComponent storageB = new ParticleStorageComponent(6);
-        storageB.addState(null, null, null);
-        storageB.addState(null, null, null);
-        storageB.addState(null, null, null);
+        storageB.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
+        storageB.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02));
+        storageB.addState(new Vector2D(3.0, 3.0), new Vector2D(0.3, 0.3), new Vector2D(0.03, 0.03));
         world.addComponent(sourceB, storageB);
 
         Entity plotEntityA = world.createEntity();
