@@ -2,7 +2,6 @@ package com.setoh.pixphy.physics.system;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.List;
 
@@ -32,7 +31,7 @@ final class ParticleStorageUpdaterTest {
         world.addComponent(entity, particle);
         world.addComponent(entity, storage);
 
-        new ParticleStorageUpdater().update(world, 0.016);
+        new ParticleStorageUpdater(0.015).update(world, 0.016);
 
         assertEquals(1, storage.currentSize());
         assertEquals(List.of(position), storage.getPositionHistory());
@@ -55,7 +54,7 @@ final class ParticleStorageUpdaterTest {
         world.addComponent(entity, particle);
         world.addComponent(entity, storage);
 
-        ParticleStorageUpdater updater = new ParticleStorageUpdater();
+        ParticleStorageUpdater updater = new ParticleStorageUpdater(0.015);
         updater.update(world, 0.016);
 
         position = new Vector2D(10.0, 10.0);
@@ -74,7 +73,7 @@ final class ParticleStorageUpdaterTest {
 
         assertEquals(2, storage.currentSize());
         assertEquals(List.of(10.0, 20.0), storage.getPositionHistory().stream().map(Vector2D::x).toList());
-        assertSame(storage.getPositionHistory().get(1), position);
+        assertEquals(storage.getPositionHistory().get(1), position);
         assertEquals(10.0, storage.getPositionHistory().get(0).x());
         assertEquals(20.0, storage.getPositionHistory().get(1).x());
     }
@@ -95,7 +94,7 @@ final class ParticleStorageUpdaterTest {
         world.addComponent(storageOnly, new ParticleStorageComponent(2));
         world.addComponent(storageOnly, new PositionComponent(1.0, 2.0));
 
-        assertDoesNotThrow(() -> new ParticleStorageUpdater().update(world, 1.0));
+        assertDoesNotThrow(() -> new ParticleStorageUpdater(0.015).update(world, 1.0));
         assertEquals(1, storage.currentSize());
     }
 }

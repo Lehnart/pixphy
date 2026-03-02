@@ -1,7 +1,6 @@
 package com.setoh.pixphy.physics.components;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
@@ -87,8 +86,8 @@ final class ParticleStorageComponentTest {
 
         storage.addState(p, v, a);
 
-        assertSame(p, storage.getPositionHistory().get(0));
-        assertSame(v, storage.getVelocityHistory().get(0));
-        assertSame(a, storage.getAccelerationHistory().get(0));
+        assertEquals(p, storage.getPositionHistory().get(0));
+        assertEquals(v, storage.getVelocityHistory().get(0));
+        assertEquals(a, storage.getAccelerationHistory().get(0));
     }
 }

@@ -10,6 +10,11 @@ public class Vector2D{
         this.y = y;
     }
 
+    public Vector2D(Vector2D v) {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
     public double x(){
         return x;
     }

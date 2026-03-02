@@ -10,9 +10,18 @@ import com.setoh.pixphy.physics.component.ParticleStorageComponent;
 import com.setoh.pixphy.physics.component.Vector2D;
 
 public class ParticleStorageUpdater implements ECSSystem {
-    
+    private double updatePeriod = 0.05;
+    private double durationSinceLastUpdate = Double.POSITIVE_INFINITY;
+
+    public ParticleStorageUpdater(double updatePeriod){
+        this.updatePeriod = updatePeriod;
+    }
+
     @Override
     public void update(World world, double dt) {
+        durationSinceLastUpdate += dt;
+        if(durationSinceLastUpdate <= updatePeriod) return;
+        durationSinceLastUpdate = 0; 
         List<EntityComponents> entityComponents = world.getEntitiesWithComponents(List.of(ParticleComponent.class, ParticleStorageComponent.class));
         for(EntityComponents components : entityComponents) {
             ParticleComponent p = (ParticleComponent) components.components().get(0);
