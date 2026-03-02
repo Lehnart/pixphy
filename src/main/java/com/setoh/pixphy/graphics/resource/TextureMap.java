@@ -10,25 +10,25 @@ public final class TextureMap{
     public static final String MARKER_TEXTURE = "textures/marker2.png";
     public static final String HDASH_TEXTURE = "textures/horizontal_dashes.png";
     public static final String VDASH_TEXTURE = "textures/vertical_dashes.png";
-    private Map<String, Texture> textureMap = new HashMap<>();
+    private Map<String, Texture> textures = new HashMap<>();
 
     public TextureMap(){
-        textureMap.put(ASTEROID_TEXTURE, new Texture(ASTEROID_TEXTURE));
-        textureMap.put(BACKGROUND_TEXTURE, new Texture(BACKGROUND_TEXTURE));
-        textureMap.put(MARKER_TEXTURE, new Texture(MARKER_TEXTURE));
-        textureMap.put(HDASH_TEXTURE, new Texture(HDASH_TEXTURE));
-        textureMap.put(VDASH_TEXTURE, new Texture(VDASH_TEXTURE));
+        textures.put(ASTEROID_TEXTURE, new Texture(ASTEROID_TEXTURE));
+        textures.put(BACKGROUND_TEXTURE, new Texture(BACKGROUND_TEXTURE));
+        textures.put(MARKER_TEXTURE, new Texture(MARKER_TEXTURE));
+        textures.put(HDASH_TEXTURE, new Texture(HDASH_TEXTURE));
+        textures.put(VDASH_TEXTURE, new Texture(VDASH_TEXTURE));
     }
 
     public TextureMap(Map<String, Texture> textureMap){
-        this.textureMap = textureMap;    
+        this.textures = textureMap;    
     }
 
     public Texture get(String key){
-        return textureMap.get(key);
+        return textures.get(key);
     }
 
     public void put(String key, Texture texture){
-        textureMap.put(key, texture);
+        textures.put(key, texture);
     }
 }
