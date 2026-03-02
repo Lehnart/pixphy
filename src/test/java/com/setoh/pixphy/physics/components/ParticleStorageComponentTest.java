@@ -41,8 +41,8 @@ final class ParticleStorageComponentTest {
         Vector2D v2 = new Vector2D(20.0, 20.0);
         Vector2D a2 = new Vector2D(30.0, 30.0);
 
-        storage.addState(p1, v1, a1);
-        storage.addState(p2, v2, a2);
+        storage.addState(p1, v1, a1, 0.);
+        storage.addState(p2, v2, a2, 0.1);
 
         assertEquals(2, storage.currentSize());
         assertEquals(List.of(p1, p2), storage.getPositionHistory());
@@ -66,9 +66,9 @@ final class ParticleStorageComponentTest {
         Vector2D v3 = new Vector2D(8.0, 8.0);
         Vector2D a3 = new Vector2D(9.0, 9.0);
 
-        storage.addState(p1, v1, a1);
-        storage.addState(p2, v2, a2);
-        storage.addState(p3, v3, a3);
+        storage.addState(p1, v1, a1, 0.1);
+        storage.addState(p2, v2, a2, 0.2);
+        storage.addState(p3, v3, a3, 0.3);
 
         assertEquals(2, storage.currentSize());
         assertEquals(List.of(p2, p3), storage.getPositionHistory());
@@ -84,7 +84,7 @@ final class ParticleStorageComponentTest {
         Vector2D v = new Vector2D(3.0, 4.0);
         Vector2D a = new Vector2D(5.0, 6.0);
 
-        storage.addState(p, v, a);
+        storage.addState(p, v, a, 0.1);
 
         assertEquals(p, storage.getPositionHistory().get(0));
         assertEquals(v, storage.getVelocityHistory().get(0));

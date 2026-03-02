@@ -18,7 +18,9 @@ public class PlotUpdaterSystem implements ECSSystem{
             PlotComponent plot = (PlotComponent) components.components().get(0);
             int entityId = plot.entityId();
             ParticleStorageComponent psc = world.getComponent(new Entity(entityId), ParticleStorageComponent.class);
-            plot.setPoints(plot.mapping().apply(psc));
+            plot.setHBars(plot.hBarMapping().apply(psc));
+            plot.setVBars(plot.vBarMapping().apply(psc));
+            plot.setPoints(plot.pointMapping().apply(psc));
         }    
     }
     

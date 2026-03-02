@@ -22,19 +22,17 @@ final class PlotUpdaterSystemTest {
 
         Entity sourceEntity = world.createEntity();
         ParticleStorageComponent storage = new ParticleStorageComponent(5);
-        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
-        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02));
+        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01), 0.1);
+        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02), 0.2);
         world.addComponent(sourceEntity, storage);
 
         Entity plotEntity = world.createEntity();
         List<Point> initialPoints = new ArrayList<>(List.of(new Point(99, 99)));
         PlotComponent plot = new PlotComponent(
-            initialPoints,
-            0,
-            0,
             sourceEntity.id(),
             psc -> List.of(new Point(psc.currentSize(), psc.maxSize()))
         );
+        plot.setPoints(initialPoints);
         world.addComponent(plotEntity, plot);
 
         new PlotUpdaterSystem().update(world, 0.016);
@@ -48,22 +46,22 @@ final class PlotUpdaterSystemTest {
 
         Entity sourceA = world.createEntity();
         ParticleStorageComponent storageA = new ParticleStorageComponent(4);
-        storageA.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
+        storageA.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01), 0.1);
         world.addComponent(sourceA, storageA);
 
         Entity sourceB = world.createEntity();
         ParticleStorageComponent storageB = new ParticleStorageComponent(6);
-        storageB.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
-        storageB.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02));
-        storageB.addState(new Vector2D(3.0, 3.0), new Vector2D(0.3, 0.3), new Vector2D(0.03, 0.03));
+        storageB.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01), 0.1);
+        storageB.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02), 0.2);
+        storageB.addState(new Vector2D(3.0, 3.0), new Vector2D(0.3, 0.3), new Vector2D(0.03, 0.03), 0.3);
         world.addComponent(sourceB, storageB);
 
         Entity plotEntityA = world.createEntity();
-        PlotComponent plotA = new PlotComponent(List.of(), 0, 0, sourceA.id(), psc -> List.of(new Point(psc.currentSize(), 1)));
+        PlotComponent plotA = new PlotComponent(sourceA.id(), psc -> List.of(new Point(psc.currentSize(), 1)));
         world.addComponent(plotEntityA, plotA);
 
         Entity plotEntityB = world.createEntity();
-        PlotComponent plotB = new PlotComponent(List.of(), 0, 0, sourceB.id(), psc -> List.of(new Point(psc.currentSize(), 2)));
+        PlotComponent plotB = new PlotComponent(sourceB.id(), psc -> List.of(new Point(psc.currentSize(), 2)));
         world.addComponent(plotEntityB, plotB);
 
         new PlotUpdaterSystem().update(world, 0.033);

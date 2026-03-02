@@ -17,24 +17,16 @@ final class PlotComponentTest {
 
     @Test
     void constructorAndAccessorsExposeConfiguredValues() {
-        List<Point> initialPoints = new ArrayList<>(List.of(new Point(1, 2), new Point(3, 4)));
         PlotComponent component = new PlotComponent(
-            initialPoints,
-            10,
-            20,
             42,
             storage -> List.of(new Point(storage.currentSize(), storage.maxSize()))
         );
-
-        assertSame(initialPoints, component.points());
-        assertEquals(10, component.x0());
-        assertEquals(20, component.y0());
         assertEquals(42, component.entityId());
     }
 
     @Test
     void setPointsReplacesPointsReference() {
-        PlotComponent component = new PlotComponent(new ArrayList<>(), 0, 0, 1, storage -> List.of());
+        PlotComponent component = new PlotComponent(1, storage -> List.of());
         List<Point> replacement = new ArrayList<>(List.of(new Point(9, 8)));
 
         component.setPoints(replacement);
@@ -46,18 +38,15 @@ final class PlotComponentTest {
     @Test
     void mappingReturnsConfiguredFunctionAndCanBeApplied() {
         ParticleStorageComponent storage = new ParticleStorageComponent(3);
-        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01));
-        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02));
+        storage.addState(new Vector2D(1.0, 1.0), new Vector2D(0.1, 0.1), new Vector2D(0.01, 0.01), 0.1);
+        storage.addState(new Vector2D(2.0, 2.0), new Vector2D(0.2, 0.2), new Vector2D(0.02, 0.02), 0.2);
 
         PlotComponent component = new PlotComponent(
-            List.of(),
-            0,
-            0,
             7,
             psc -> List.of(new Point(psc.currentSize(), psc.maxSize()))
         );
 
-        List<Point> mapped = component.mapping().apply(storage);
+        List<Point> mapped = component.pointMapping().apply(storage);
 
         assertEquals(List.of(new Point(2, 3)), mapped);
     }

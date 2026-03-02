@@ -1,5 +1,6 @@
 package com.setoh.pixphy.plot.component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -10,20 +11,33 @@ public class PlotComponent implements Component{
 
     public static record Point(int x, int y){}
 
-    private List<Point> points;
-    private int x0;
-    private int y0;
-    private int entityId; 
-    private Function<ParticleStorageComponent, List<Point>> plotMapping;
+    private List<Point> points = new ArrayList<>();
+    private List<Point> hBars = List.of();
+    private List<Point> vBars = List.of();
 
-    public PlotComponent(List<Point> points, int x0, int y0, int entityId, Function<ParticleStorageComponent, List<Point>> plotMapping){
-        this.points = points;
-        this.x0 = x0;
-        this.y0 = y0;
-        this.entityId = entityId;
-        this.plotMapping = plotMapping;
+    private int entityId; 
+    private Function<ParticleStorageComponent, List<Point>> pointMapping;
+    private Function<ParticleStorageComponent, List<Point>> hBarMapping;
+    private Function<ParticleStorageComponent, List<Point>> vBarMapping;
+
+    public PlotComponent(
+        int entityId, Function<ParticleStorageComponent, List<Point>> pointMapping
+    ){
+        this(entityId, pointMapping, psv -> List.of(), psv -> List.of());
     }
     
+    public PlotComponent(
+        int entityId, 
+        Function<ParticleStorageComponent, List<Point>> pointMapping, 
+        Function<ParticleStorageComponent, List<Point>> hBarMapping,
+        Function<ParticleStorageComponent, List<Point>> vBarMapping
+    ){
+        this.entityId = entityId;
+        this.pointMapping = pointMapping;
+        this.hBarMapping = hBarMapping;
+        this.vBarMapping = vBarMapping;
+    }
+
     public List<Point> points(){
         return points;
     }
@@ -32,19 +46,36 @@ public class PlotComponent implements Component{
         this.points = points;
     }
 
-    public int x0(){
-        return x0;
-    }
-
-    public int y0(){
-        return y0;
-    }
-
     public int entityId(){
         return entityId;
     }
 
-    public Function<ParticleStorageComponent, List<Point>> mapping(){
-        return this.plotMapping;
+    public void setHBars(List<Point> hBarsTopLeft){
+        hBars = new ArrayList<>(hBarsTopLeft);
+    }
+
+    public void setVBars(List<Point> vBarsTopLeft){
+        vBars = new ArrayList<>(vBarsTopLeft);
+    }
+
+    public List<Point> hBars(){
+        return hBars;
+    }
+
+    public List<Point> vBars(){
+        return vBars;
+    }
+
+    public Function<ParticleStorageComponent, List<Point>> pointMapping(){
+        return this.pointMapping;
+    }
+
+    public Function<ParticleStorageComponent, List<Point>> hBarMapping(){
+        return this.hBarMapping;
+    }
+
+        public Function<ParticleStorageComponent, List<Point>> vBarMapping(){
+        return this.vBarMapping;
     }
 }
+

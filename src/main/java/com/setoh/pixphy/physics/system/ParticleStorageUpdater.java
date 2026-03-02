@@ -10,8 +10,9 @@ import com.setoh.pixphy.physics.component.ParticleStorageComponent;
 import com.setoh.pixphy.physics.component.Vector2D;
 
 public class ParticleStorageUpdater implements ECSSystem {
-    private double updatePeriod = 0.05;
+    private double updatePeriod;
     private double durationSinceLastUpdate = Double.POSITIVE_INFINITY;
+    private double t = 0.;
 
     public ParticleStorageUpdater(double updatePeriod){
         this.updatePeriod = updatePeriod;
@@ -19,6 +20,7 @@ public class ParticleStorageUpdater implements ECSSystem {
 
     @Override
     public void update(World world, double dt) {
+        t += dt;
         durationSinceLastUpdate += dt;
         if(durationSinceLastUpdate <= updatePeriod) return;
         durationSinceLastUpdate = 0; 
@@ -31,7 +33,7 @@ public class ParticleStorageUpdater implements ECSSystem {
             Vector2D acc = p.getAcceleration();
             Vector2D pos = p.getPosition();
             
-            ps.addState(pos, vel, acc);
+            ps.addState(pos, vel, acc, t);
         }    
     }
 }
