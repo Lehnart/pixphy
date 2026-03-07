@@ -33,7 +33,7 @@ public class ParticleStorageUpdater implements ECSSystem {
             Vector2D acc = p.getAcceleration();
             Vector2D pos = p.getPosition();
             
-            ps.addState(pos, vel, acc, t);
+            ps.addState(pos, vel, acc, t, p.getMass());
         }    
     }
 }

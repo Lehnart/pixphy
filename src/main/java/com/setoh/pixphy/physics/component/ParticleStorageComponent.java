@@ -12,6 +12,7 @@ public class ParticleStorageComponent implements Component {
     private final Vector2D[] velocityBuffer;
     private final Vector2D[] accelerationBuffer;
     private final Double[] timeBuffer;
+    private double mass;
 
     private int currentIndex = -1;
     private int currentSize = 0;
@@ -26,9 +27,10 @@ public class ParticleStorageComponent implements Component {
         this.velocityBuffer = new Vector2D[bufferSize];
         this.accelerationBuffer = new Vector2D[bufferSize];
         this.timeBuffer = new Double[bufferSize];
+        this.mass = 1.;
     }
 
-    public void addState(Vector2D position, Vector2D velocity, Vector2D acceleration, double t) {
+    public void addState(Vector2D position, Vector2D velocity, Vector2D acceleration, double t, double mass) {
         currentIndex = (currentIndex+1) % maxSize;
         if (currentSize < maxSize) {
             currentSize++;
@@ -37,6 +39,7 @@ public class ParticleStorageComponent implements Component {
         velocityBuffer[currentIndex] = new Vector2D(velocity);
         accelerationBuffer[currentIndex] = new Vector2D(acceleration);    
         timeBuffer[currentIndex] = t;
+        this.mass = mass;
     }
 
     public int currentSize() {
@@ -71,6 +74,10 @@ public class ParticleStorageComponent implements Component {
             history = Arrays.asList(Arrays.copyOf(timeBuffer, currentSize));
         }
         return history;
+    }
+
+    public double getMass(){
+        return mass;
     }
 
     private List<Vector2D> getHistory(Vector2D[] buffer) {
