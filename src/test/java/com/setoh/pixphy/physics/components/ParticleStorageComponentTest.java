@@ -84,12 +84,13 @@ final class ParticleStorageComponentTest {
         Vector2D p = new Vector2D(1.0, 2.0);
         Vector2D v = new Vector2D(3.0, 4.0);
         Vector2D a = new Vector2D(5.0, 6.0);
-
-        storage.addState(p, v, a, 0.1, 1.);
+        double mass = 1.;
+        storage.addState(p, v, a, 0.1, mass);
 
         assertEquals(p, storage.getPositionHistory().get(0));
         assertEquals(v, storage.getVelocityHistory().get(0));
         assertEquals(a, storage.getAccelerationHistory().get(0));
+        assertEquals(mass, storage.getMass());
     }
 
     @Test
