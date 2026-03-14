@@ -12,6 +12,7 @@ public final class World {
     private int nextEntityId = 1;
     private final Map<Entity, List<Component>> entityToComponents = new HashMap<>();
     private final List<ECSSystem> systems = new ArrayList<>();
+    private final Store store = new Store();
 
     private boolean isAlive = true;
 
@@ -83,5 +84,9 @@ public final class World {
             }
         }
         return results;        
+    }
+
+    public Store getStore(){
+        return store;
     }
 }

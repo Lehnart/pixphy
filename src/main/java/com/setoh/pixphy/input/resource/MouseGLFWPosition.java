@@ -1,21 +1,23 @@
-package com.setoh.pixphy.graphics.resource;
+package com.setoh.pixphy.input.resource;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.system.MemoryStack;
+
+import com.setoh.pixphy.graphics.resource.Window;
 
 import java.nio.DoubleBuffer;
 
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
 import static org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback;
 
-public final class MousePosition {
+public final class MouseGLFWPosition {
     private final long windowHandle;
     private final GLFWCursorPosCallback callback;
     private double x;
     private double y;
     private boolean destroyed;
 
-    public MousePosition(long windowHandle) {
+    public MouseGLFWPosition(long windowHandle) {
         this.windowHandle = windowHandle;
         this.callback = GLFWCursorPosCallback.create((window, xPos, yPos) -> {
             x = xPos;
@@ -26,7 +28,7 @@ public final class MousePosition {
         refresh();
     }
 
-    public MousePosition(Window window) {
+    public MouseGLFWPosition(Window window) {
         this(window.handle());
     }
 
