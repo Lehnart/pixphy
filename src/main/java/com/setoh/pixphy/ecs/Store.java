@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class Store {
     
-    public static String MOUSE_POSITION = "mouse position";
+    public static final String MOUSE_POSITION = "mouse position";
 
-    public Map<String, Object> storeMap;
+    private final Map<String, Object> storeMap;
 
     public Store(){
         storeMap = new HashMap<>();

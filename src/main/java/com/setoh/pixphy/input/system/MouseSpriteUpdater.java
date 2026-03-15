@@ -21,8 +21,8 @@ public class MouseSpriteUpdater implements ECSSystem {
             if (mousePos == null){
                 return;
             }
-            sprite.setX(mousePos.x()/2);
-            sprite.setY(mousePos.y()/2);
+            sprite.setX(mousePos.x()/2.);
+            sprite.setY(mousePos.y()/2.);
         }    
     }
 }
